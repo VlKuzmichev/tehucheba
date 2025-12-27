@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Тестирование</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <h1>Извините, вы уже принимали участие в тестировании сегодня!</h1>
+    <form th:class="center-block" th:action="@{/quizzes}">
+        <button th:class="button" type="submit">Закрыть</button>
+    </form>
+
+</body>
+</html>

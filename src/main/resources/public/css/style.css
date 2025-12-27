@@ -1,0 +1,105 @@
+h1 {
+    margin: 50px;
+    text-align: center;
+}
+
+ul {
+    margin: auto 50px;
+    text-align: unset;
+}
+
+li {
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: underline;
+    color: black;
+}
+
+.protocol {
+    text-decoration: underline;
+    color: black;
+}
+
+.button {
+    align-content: center;
+}
+
+.center-block {
+    margin-bottom: 10px;
+    margin-top: 30px;
+    text-align: center;
+    font-size: large;
+}
+
+h3 {
+    margin: 2px;
+}
+
+.questions_scrolled_block {
+    margin: 5px auto;
+    width: max-content;
+    height: 200px;
+    border-style: double;
+    overflow-y:  scroll;
+}
+
+
+.result {
+    font-size: large;
+    font-weight: bold;
+}
+
+.end-button {
+    margin-bottom: 50px;
+}
+
+.question, .quiz {
+    font-size: large;
+    font-weight: bold;
+}
+
+.student-name {
+    text-align: center;
+}
+
+.student {
+    margin-top: 50px;
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
+}
+
+table {
+    margin: auto;
+    border-style: solid;
+    border-spacing: unset;
+    border-collapse: collapse;
+    min-width: 1000px;
+    width: max-content;
+}
+
+th, td {
+    padding: 5px;
+}
+
+td {
+    text-align: left;
+    border-style: solid;
+    border-color: black;
+    color: black;
+}
+
+th {
+    border-color: black;
+    border-style: solid;
+    background: black;
+    color: white;
+}
+
+.input-name {
+    width: 450px;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Тестирование</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<h1>Тестирование</h1>
+<form action="#" onsubmit="checkInput()" method="post" th:model="testForm">
+    <span>ФИО тестируемого: </span>
+    <input th:id="student-name" type="text" th:field="${testForm.studentName}">
+    <div th:each="answer, answerStat: ${testForm.getTestAnswers()}">
+        <p th:class="question" th:text="${answerStat.index + 1 + '. ' + answer.question.name}">
+        </p>
+        <input th:id="name" type="hidden" th:value="${answer.question.id}" th:field="*{testForm.testAnswers[__${answerStat.index}__].question.id}"/>
+        <li th:each="variant: ${answer.getQuestion().getAnswers()}">
+            <input type="radio" th:id = "${variant.id}"
+                   th:field="*{testForm.testAnswers[__${answerStat.index}__].answer.id}"
+                   th:value="${variant.id}"/>
+            <label th:for="${variant.id}" th:text="${variant.name}"></label>
+        </li>
+        <hr/>
+    </div>
+    <button th:class="end-button" onclick="hide()" type="submit">Завершить тестирование</button>
+</form>
+<script>
+    function checkInput() {
+        if (document.getElementById("student-name").value.length === 0) {
+            alert("Вы не ввели свое Имя!");
+            event.preventDefault();
+        }
+    }
+
+    function hide() {
+        let radios = document.getElementsByTagName('radio');
+        for (let r of radios) {
+            r.setAttribute('checked', '');
+        }
+    }
+</script>
+
+</body>
+</html>

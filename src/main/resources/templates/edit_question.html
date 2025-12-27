@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование вопроса</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1 th:text="${questionForm.id != null} ? 'Редактирование вопроса' : 'Добавление вопроса'"></h1>
+<div th:class="center-block">
+    <form id="question-form" action="#" method="post" th:model="${questionForm}">
+        <div>
+            <span>Наименование: </span>
+            <input type="hidden" th:field="${questionForm.id}">
+            <input th:class="input-name" type="text" th:field="${questionForm.name}">
+        </div>
+        <h3>Ответы</h3>
+        <input th:class="input-name" type="text" id="add-answer">
+        <button onclick="add_answer()" type="button">Добавить ответ</button>
+        <table>
+            <thead>
+            <tr>
+                <th>Текст ответа</th>
+                <th>Верный/Неверный</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="question-answers">
+            </tbody>
+        </table>
+        <button th:class="end-button" onclick="save_question()" type="button">Сохранить</button>
+        <button th:class="end-button" onclick="location.href ='/edit_questions'" type="button">Назад</button>
+    </form>
+
+</div>
+<script th:inline="javascript">
+    let question_id = [[${questionForm.id}]];
+    if (question_id === 0) question_id = null;
+    let answers = [[${questionForm.answers}]];
+    answers.sort(function (a, b) {
+        return a.id - b.id;
+    });
+    let tbl_answers = document.getElementById("question-answers");
+    for (let answer of answers) {
+        let answer_tr = document.createElement('tr');
+        answer_tr.id = answer.id;
+        let answer_td = document.createElement('td');
+        answer_td.textContent = answer.name;
+        let truly_td = document.createElement('td');
+        let truly_btn = document.createElement('a');
+        truly_btn.href = "#";
+        truly_btn.textContent = answer.rightAnswer === true ? 'Верно' : 'Неверно';
+        // Click to check truly answer
+        truly_btn.addEventListener("click", function () {
+            change_truly_answer(answer);
+        });
+        truly_td.style.width = '100px';
+        let answer_btn_td = document.createElement('td');
+        answer_btn_td.style.width = '100px';
+        let answer_btn = document.createElement('a');
+        answer_btn.href = "#";
+
+        // Click to remove answer
+        answer_btn.addEventListener("click", function () {
+            remove_answer(answer);
+        });
+        answer_btn.textContent = 'Удалить';
+        tbl_answers.append(answer_tr);
+        answer_tr.append(answer_td);
+        truly_td.append(truly_btn);
+        answer_tr.append(truly_td);
+        answer_tr.append(answer_btn_td);
+        answer_btn_td.append(answer_btn);
+    }
+
+    function change_truly_answer(answer) {
+        answers.forEach(a => {
+            if (a.id !== answer.id) {
+                a.rightAnswer = false;
+                document.getElementById(a.id).children[1].firstChild.textContent = 'Неверно';
+            } else {
+                a.rightAnswer = true;
+                document.getElementById(a.id).children[1].firstChild.textContent = 'Верно';
+            }
+        });
+    }
+
+    function add_answer() {
+        let add_answer = document.getElementById("add-answer");
+        let stop_add = false;
+        answers.forEach(answer => answer.name === add_answer.value ? stop_add = true : '');
+        if (stop_add === true) {
+            alert('Такой ответ уже есть!');
+            return;
+        }
+        if (add_answer.value === '') {
+            alert('Ответ не может быть пустым!');
+            return;
+        }
+        let answer = {
+            id: 'null_' + Date.now(),
+            name: add_answer.value,
+            rightAnswer: false,
+            question: null
+        }
+
+        answers.push(answer);
+        let answer_tr = document.createElement('tr');
+        answer_tr.id = answer.id;
+        let answer_td = document.createElement('td');
+        answer_td.textContent = answer.name;
+        let truly_td = document.createElement('td');
+        let truly_btn = document.createElement('a');
+        truly_btn.href = "#";
+        truly_btn.textContent = answer.rightAnswer === true ? 'Верно' : 'Неверно';
+        // Click to check truly answer
+        truly_btn.addEventListener("click", function () {
+            change_truly_answer(answer);
+        });
+        truly_td.style.width = '100px';
+        let answer_btn_td = document.createElement('td');
+        answer_btn_td.style.width = '100px';
+        let answer_btn = document.createElement('a');
+        answer_btn.href = "#";
+
+        // Click to remove answer
+        answer_btn.addEventListener("click", function () {
+            remove_answer(answer);
+        });
+        answer_btn.textContent = 'Удалить';
+        tbl_answers.append(answer_tr);
+        answer_tr.append(answer_td);
+        truly_td.append(truly_btn);
+        answer_tr.append(truly_td);
+        answer_tr.append(answer_btn_td);
+        answer_btn_td.append(answer_btn);
+    }
+
+    function remove_answer(answer) {
+        document.getElementById(answer.id).remove();
+        answers = answers.filter(item => item.id !== answer.id);
+        event.preventDefault();
+    }
+
+    function save_question() {
+        let form = document.getElementById("question-form");
+        let send_form = new FormData(form);
+        answers.forEach(answer => typeof answer.id !== 'number' ? answer.id = null : '')
+        let sendData = {}
+        if (question_id !== null) {
+            sendData = {
+                id: send_form.get('id'),
+                name: send_form.get('name'),
+                answers: answers
+            };
+        } else {
+            sendData = {
+                id: null,
+                name: send_form.get('name'),
+                answers: answers
+            };
+        }
+        // answers.forEach((item, index) => {
+        //     send_form.append(`answers[${index}][id]`, item.id);
+        //     send_form.append(`answers[${index}][rightAnswer]`, item.rightAnswer);
+        // });
+        if (question_id !== null) {
+            fetch('/edit_questions/' + question_id, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(sendData),
+            })
+                .then(() => {
+                    location.replace('/edit_questions');
+                })
+        } else {
+            fetch('/edit_questions/', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(sendData),
+            })
+                .then(() => {
+                    location.replace('/edit_questions');
+                })
+        }
+    }
+</script>
+</body>
+</html>

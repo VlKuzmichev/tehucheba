@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование вопросов</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<h1>Список вопросов</h1>
+<div th:class="center-block">
+    <a th:href="edit_questions + '/add'">
+        <button type="button">Добавить вопрос</button>
+    </a>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>Текст вопроса</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="question, result: ${questions}">
+        <td th:text="${result.index + 1 + '. ' + question.name}"></td>
+        <td style="width: 100px"><a th:href="edit_questions + '/' +  ${question.id}">Изменить</a></td>
+        <td style="width: 100px"><a th:href="edit_questions + '/remove/' +  ${question.id}" onclick="remove()">Удалить</a></td>
+    </tr>
+    </tbody>
+</table>
+<div th:class="center-block">
+    <button th:class="end-button" onclick="location.href ='/manage_quizzes'" type="button">Назад</button>
+</div>
+
+<script lang="js">
+    function remove() {
+        if (!confirm('Вы действительно хотите удалить вопрос?')) {
+            event.preventDefault();
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление теста</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Добавление теста</h1>
+<div th:class="center-block">
+    <form id="quiz-form" action="/edit_quizzes" method="post" th:model="${addQuizForm}">
+        <div>
+            <p>Наименование: </p>
+            <input th:class="input-name" type="text" th:field="${addQuizForm.name}">
+        </div>
+        <div>
+            <p>Проходной балл: </p>
+            <input type="number" th:field="${addQuizForm.minScore}">
+        </div>
+        <button th:class="end-button" type="submit">Сохранить</button>
+        <button th:class="end-button" onclick="location.href ='/quizzes'" type="button">Назад</button>
+    </form>
+
+</div>
+</body>
+</html>

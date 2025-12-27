@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список тестов</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<h1>Список тестов</h1>
+<ul>
+    <li th:class="quiz" th:each="quiz, result: ${quizzes}">
+        <a th:if="${quiz.questions.size() != 0}" th:href="tests + '/' +  ${quiz.id}" th:text="${result.index + 1 + '. ' + quiz.name}"></a>
+    </li>
+</ul>
+</body>
+</html>

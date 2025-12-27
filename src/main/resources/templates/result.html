@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Результат тестирования</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<h1>Ваш результат</h1>
+<div>
+    <div th:class="center-block">
+        <span>Студент: </span>
+        <span th:class="student" th:text="${protocol.name }"></span>
+    </div>
+    <p th:class="center-block" th:text="${'Дата тестирования: '
+    + protocol.testDate.getDayOfMonth() + '.'
+    + protocol.testDate.getMonthValue() + '.'
+    + protocol.testDate.getYear()}"></p>
+    <div th:class="center-block">
+        <span>Ваш балл: </span>
+        <span th:class="result" th:text="${protocol.percent}"></span>
+        <span th:text="${'(минимальный: ' + protocol.minScore + ')'}"> </span>
+    </div>
+    <div th:class="center-block">
+        <span>Результат: </span>
+        <span th:class="result" th:text="${protocol.status ? 'Зачет' : 'Незачет'}"></span>
+    </div>
+</div>
+<form th:class="center-block" th:action="@{/quizzes}">
+    <button th:class="button" type="submit">Закрыть</button>
+</form>
+
+</body>
+</html>

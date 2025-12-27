@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Протокол</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Протокол</h1>
+<div th:class="center-block">
+    <div th:class="center-block">
+        <span>Студент: </span>
+        <span th:class="student" th:text="${protocol.name }"></span>
+    </div>
+    <div th:class="center-block">
+        <span>Наименование теста: </span>
+        <span th:class="result" th:text="${protocol.quizName}"></span>
+    </div>
+    <p th:class="center-block" th:text="'Дата тестирования: ' + ${protocol.testDate.getDayOfMonth() + '.'
+     + protocol.testDate.getMonthValue() + '.'
+     + protocol.testDate.getYear() + ' '
+     + protocol.testDate.getHour() + ':'
+     + protocol.testDate.getMinute()}"></p>
+    <div th:class="center-block">
+        <span>Ваш балл: </span>
+        <span th:class="result" th:text="${protocol.percent}"></span>
+        <span th:text="${'(минимальный: ' + protocol.minScore + ')'}"> </span>
+    </div>
+    <div th:class="center-block">
+        <span>Результат: </span>
+        <span th:class="result" th:text="${protocol.status ? 'Зачет' : 'Незачет'}"></span>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th>Результаты проверки</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="detail, index: ${details}">
+            <td th:text="${__${index.index + 1}__}"></td>
+            <td th:text="${detail}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:class="center-block">
+        <span>Проверил: _________________________________________</span>
+        <p th:text="'Дата: ' + ${protocol.testDate.getDayOfMonth() + '.'
+        + protocol.testDate.getMonthValue() + '.'
+        + protocol.testDate.getYear()}"></p>
+    </div>
+    <div th:class="center-block">
+        <button th:class="end-button" onclick="location.href ='/protocols'" type="button">Назад</button>
+    </div>
+
+</div>
+</body>
+</html>

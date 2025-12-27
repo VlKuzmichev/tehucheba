@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список протоколов</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<h1>Список протоколов</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Дата</th>
+        <th>Студент</th>
+        <th>Наименование теста</th>
+        <th>Результат</th>
+        <th>Балл</th>
+        <th>Проходной балл</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="protocol, result: ${protocols}">
+        <td th:text="${protocol.testDate.getDayOfMonth() + '.'
+        + protocol.testDate.getMonthValue() + '.'
+        + protocol.testDate.getYear() + ' '
+        + protocol.testDate.getHour() + ':'
+        + protocol.testDate.getMinute()}"></td>
+        <td th:text="${protocol.name}"></td>
+        <td th:text="${protocol.quizName}"></td>
+        <td th:text="${protocol.status ? 'Зачет' : 'Незачет'}"></td>
+        <td th:text="${protocol.percent}"></td>
+        <td th:text="${protocol.minScore}"></td>
+        <td><a th:class="protocol" th:href="protocols + '/' +  ${protocol.id}" >Подробнее..</a></td>
+    </tr>
+    </tbody>
+</table>
+<div th:class="center-block">
+    <button th:class="end-button" onclick="location.href ='/manage_quizzes'" type="button">Назад</button>
+</div>
+
+
+</body>
+</html>

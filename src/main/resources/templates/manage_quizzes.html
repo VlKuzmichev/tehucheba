@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Управление тестами</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<h1>Управление тестами</h1>
+
+<ul>
+    <li th:class="quiz">
+        <a th:href="edit_quizzes">Редактирование тестов</a>
+    </li>
+    <li th:class="quiz">
+        <a th:href="edit_questions">Редактирование вопросов</a>
+    </li>
+    <li th:class="quiz">
+        <a th:href="protocols">Список протоколов</a>
+    </li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование тестов</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<h1>Редактирование тестов</h1>
+
+<div th:class="center-block">
+    <a th:href="edit_quizzes + '/add'">
+        <button type="button">Добавить тест</button>
+    </a>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>Наименование теста</th>
+        <th>Проходной балл</th>
+        <th>Вопросов</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:class="quiz" th:each="quiz: ${quizzes}">
+        <td th:text="${quiz.name}"></td>
+        <td style="text-align: center" th:text="${quiz.minScore} + '%'"></td>
+        <td style="text-align: center" th:text="${quiz.questions.size()}"></td>
+        <td><a th:href="edit_quizzes + '/' +  ${quiz.id}">Изменить</a></td>
+        <td><a th:href="edit_quizzes + '/remove/' +  ${quiz.id}" onclick="remove()">Удалить</a></td>
+    </tr>
+    </tbody>
+</table>
+<div th:class="center-block">
+    <button th:class="end-button" onclick="location.href ='/manage_quizzes'" type="button">Назад</button>
+</div>
+
+<script lang="js">
+    function remove() {
+        if (!confirm('Вы действительно хотите удалить тест?')) {
+            event.preventDefault();
+        }
+    }
+</script>
+</body>
+</html>

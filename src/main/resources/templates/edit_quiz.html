@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование теста</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Редактирование теста</h1>
+<div th:class="center-block">
+    <form id="quiz-form" action="#" method="post" th:model="${editQuizForm}">
+        <div>
+            <span>Наименование: </span>
+            <input th:class="input-name" type="text" th:field="${editQuizForm.name}">
+        </div>
+        <div>
+            <span>Проходной балл: </span>
+            <input type="number" th:field="${editQuizForm.minScore}">
+        </div>
+        <h3>Вопросы теста</h3>
+        <div th:class="questions_scrolled_block">
+            <table>
+                <tbody id="quiz-questions">
+                </tbody>
+            </table>
+        </div>
+        <h3>Все вопросы</h3>
+        <div th:class="questions_scrolled_block">
+            <table>
+                <tbody id="quiz-all-questions">
+                </tbody>
+            </table>
+        </div>
+        <button th:class="end-button" onclick="save_quiz()" type="button">Сохранить</button>
+        <button th:class="end-button" onclick="location.href ='/edit_quizzes'" type="button">Назад</button>
+    </form>
+
+</div>
+<script th:inline="javascript">
+    let quiz_all_questions = [[${questions}]];
+    let quiz_id = [[${editQuizForm.id}]];
+    let quiz_questions = [[${editQuizForm.questions}]];
+    let new_all_questions = [];
+    for (let q of quiz_all_questions) {
+        let has_id = false;
+        for (let qq of quiz_questions) {
+            if (q.id === qq.id) {
+                has_id = true;
+                break;
+            } else {
+                has_id = false;
+            }
+        }
+        if (has_id !== true) {
+            new_all_questions.push(q);
+            has_id = false;
+        }
+    }
+    quiz_all_questions = new_all_questions;
+    let tbl_questions = document.getElementById('quiz-questions');
+    let tbl_all_questions = document.getElementById('quiz-all-questions');
+    for (let question of quiz_questions) {
+        let question_tr = document.createElement('tr');
+        question_tr.id = question.id;
+        let question_td = document.createElement('td');
+        question_td.textContent = question.name;
+        let question_btn_td = document.createElement('td');
+        question_btn_td.style.width = '100px';
+        let question_btn = document.createElement('a');
+        question_btn.href = '#';
+        question_btn.textContent = 'Удалить';
+
+        // Click to remove question
+        question_btn.addEventListener('click', function () {
+            remove_question(question);
+        });
+        tbl_questions.append(question_tr);
+        question_tr.append(question_td);
+        question_tr.append(question_btn_td);
+        question_btn_td.append(question_btn);
+    }
+    // Table All Questions
+    for (let question of quiz_all_questions) {
+        let all_question_tr = document.createElement('tr');
+        all_question_tr.id = question.id;
+        let all_question_td = document.createElement('td');
+        all_question_td.id = question.id;
+        all_question_td.textContent = question.name;
+        let all_question_btn_td = document.createElement('td');
+        all_question_btn_td.style.width = '100px';
+        let all_question_btn = document.createElement('a');
+        all_question_btn.href = '#';
+        all_question_btn.textContent = 'Добавить';
+
+        // Click Add button
+        all_question_btn.onclick = function () {
+            document.getElementById(question.id).remove();
+            let question_tr = document.createElement('tr');
+            question_tr.id = question.id;
+            let question_td = document.createElement('td');
+            question_td.textContent = question.name;
+            let question_btn_td = document.createElement('td');
+            question_btn_td.style.width = '100px';
+            let question_btn = document.createElement('a');
+            question_btn.href = '#';
+            question_btn.textContent = 'Удалить';
+            tbl_questions.append(question_tr);
+            question_tr.append(question_td);
+            question_tr.append(question_btn_td);
+            question_btn_td.append(question_btn);
+            quiz_questions.push(question);
+
+            // Onclick Added Question
+            question_btn.addEventListener('click', function () {
+                remove_question(question);
+            });
+        };
+        tbl_all_questions.append(all_question_tr);
+        all_question_tr.append(all_question_td);
+        all_question_tr.append(all_question_btn_td);
+        all_question_btn_td.append(all_question_btn);
+    }
+
+    function remove_question(question) {
+        document.getElementById(question.id).remove();
+        quiz_questions.forEach(item => item.id === question.id ? quiz_all_questions.push(item) : '');
+        quiz_questions = quiz_questions.filter(item => item.id !== question.id);
+        let all_question_tr = document.createElement('tr');
+        all_question_tr.id = question.id;
+        let all_question_td = document.createElement('td');
+        all_question_td.id = question.id;
+        all_question_td.textContent = question.name;
+        let all_question_btn_td = document.createElement('td');
+        all_question_btn_td.style.width = '100px';
+        let all_question_btn = document.createElement('a');
+        all_question_btn.href = '#';
+        all_question_btn.textContent = 'Добавить';
+        tbl_all_questions.append(all_question_tr);
+        all_question_tr.append(all_question_td);
+        all_question_tr.append(all_question_btn_td);
+        all_question_btn_td.append(all_question_btn);
+        all_question_btn.addEventListener('click', function () {
+            add_question(question);
+        });
+        event.preventDefault();
+    }
+
+    function add_question(add_question) {
+        quiz_all_questions.forEach(item => item.id === add_question.id ? quiz_questions.push(item) : '');
+        quiz_all_questions = quiz_all_questions.filter(item => item.id !== add_question.id);
+        document.getElementById(add_question.id).remove();
+        let question_tr = document.createElement('tr');
+        question_tr.id = add_question.id;
+        let question_td = document.createElement('td');
+        question_td.id = add_question.id;
+        question_td.textContent = add_question.name;
+        let question_btn_td = document.createElement('td');
+        question_btn_td.style.width = '100px';
+        let question_btn = document.createElement('a');
+        question_btn.href = '#';
+        question_btn.textContent = 'Удалить';
+        tbl_questions.append(question_tr);
+        question_tr.append(question_td);
+        question_tr.append(question_btn_td);
+        question_btn_td.append(question_btn);
+        question_btn.addEventListener('click', function () {
+            remove_question(add_question);
+        });
+        event.preventDefault();
+    }
+
+    function save_quiz() {
+        let form = document.getElementById('quiz-form');
+        let send_form = new FormData(form);
+        quiz_questions.forEach(item => {
+            send_form.append('questions[]', item.id);
+        });
+
+        fetch('/edit_quizzes/' + quiz_id, {
+            method: "POST",
+            body: send_form
+        })
+             .then(() => {
+                    // response.json()
+                    location.replace('/edit_quizzes');
+                }
+            )
+    }
+
+</script>
+</body>
+</html>
