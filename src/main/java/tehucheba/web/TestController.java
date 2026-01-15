@@ -3,7 +3,7 @@ package tehucheba.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import tehucheba.Model.*;
+import tehucheba.model.*;
 import tehucheba.repository.AnswerRepository;
 import tehucheba.repository.ProtocolRepository;
 import tehucheba.repository.QuestionRepository;

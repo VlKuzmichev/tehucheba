@@ -4,9 +4,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import tehucheba.Model.Answer;
-import tehucheba.Model.EditQuestionForm;
-import tehucheba.Model.Question;
+import tehucheba.model.Answer;
+import tehucheba.model.EditQuestionForm;
+import tehucheba.model.Question;
 import tehucheba.repository.AnswerRepository;
 import tehucheba.repository.QuestionRepository;
 

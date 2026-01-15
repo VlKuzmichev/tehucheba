@@ -2,7 +2,7 @@ package tehucheba.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import tehucheba.Model.Protocol;
+import tehucheba.model.Protocol;
 
 import java.time.LocalDate;
 import java.util.List;

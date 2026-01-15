@@ -1,4 +1,4 @@
-package tehucheba.Model;
+package tehucheba.model;
 
 import java.util.ArrayList;
 import java.util.List;

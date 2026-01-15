@@ -1,6 +1,6 @@
 package tehucheba;
 
-import tehucheba.Model.User;
+import tehucheba.model.User;
 
 public class AuthorizedUser extends org.springframework.security.core.userdetails.User {
     public AuthorizedUser(User user) {

@@ -1,4 +1,4 @@
-package tehucheba.Model;
+package tehucheba.model;
 
 import org.hibernate.Hibernate;
 

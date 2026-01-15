@@ -1,7 +1,7 @@
 package tehucheba.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import tehucheba.Model.User;
+import tehucheba.model.User;
 
 import java.util.Optional;
 

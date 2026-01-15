@@ -3,9 +3,9 @@ package tehucheba.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import tehucheba.Model.EditQuizForm;
-import tehucheba.Model.Question;
-import tehucheba.Model.Quiz;
+import tehucheba.model.EditQuizForm;
+import tehucheba.model.Question;
+import tehucheba.model.Quiz;
 import tehucheba.repository.QuestionRepository;
 import tehucheba.repository.QuizRepository;
 

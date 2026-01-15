@@ -3,7 +3,7 @@ package tehucheba.service;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import tehucheba.AuthorizedUser;
-import tehucheba.Model.User;
+import tehucheba.model.User;
 import tehucheba.repository.UserRepository;
 
 @Service("userService")

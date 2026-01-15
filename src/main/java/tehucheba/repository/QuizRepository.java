@@ -1,7 +1,7 @@
 package tehucheba.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import tehucheba.Model.Quiz;
+import tehucheba.model.Quiz;
 
 import java.util.List;
 import java.util.Optional;

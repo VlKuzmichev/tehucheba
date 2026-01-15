@@ -1,4 +1,4 @@
-package tehucheba.Model;
+package tehucheba.model;
 
 import com.sun.istack.NotNull;
 
